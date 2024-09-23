@@ -1,7 +1,7 @@
 # Advanced Programming Lecture
 
 ## Algorithm
-> **Tip 1:** All content is going to be tough and asked in Python programming language.
+> **Tip 1:** All content is going to be tough and asked in Python programming language.  
 > **Tip 2:** We are going to define the computation time complexity using BigO notation, solve some examples, and learn how to estimate the time complexity of algorithms. We will continuously update our understanding throughout the course.
 
 ### 1. Sorting Algorithms
