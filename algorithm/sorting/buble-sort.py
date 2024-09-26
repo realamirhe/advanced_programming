@@ -1,4 +1,4 @@
-def bubble_sort(array):
+def bubble_sort(array: list[int]):
     """
     note: traverse from left and compare adjacent elements and the higher one is placed at right side.
     In this way, the largest element is moved to the rightmost end at first.
