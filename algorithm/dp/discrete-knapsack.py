@@ -27,4 +27,4 @@ def knapsack_01(items: list[tuple[int, int]], capacity: int) -> int:
     >>> knapsack_01(items, capacity)
     7  # Maximum value that can be obtained is 7
     """
-    pass
+    ...

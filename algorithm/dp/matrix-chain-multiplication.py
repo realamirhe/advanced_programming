@@ -23,4 +23,4 @@ def matrix_chain_multiplication(dims: list[int]) -> int:
     >>> matrix_chain_multiplication(dims)
     18  # Minimum number of scalar multiplications needed
     """
-    pass
+    ...
