@@ -23,5 +23,6 @@ def longest_common_subsequence(X: str, Y: str) -> int:
     >>> Y = "BDCAB"
     >>> longest_common_subsequence(X, Y)
     4  # LCS length is 4 ("BCAB" is the LCS)
+    Companies: Amazon, Microsoft, Citrix
     """
     ...
