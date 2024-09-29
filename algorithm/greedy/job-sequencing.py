@@ -1,4 +1,14 @@
-def job_sequencing(jobs: list[tuple[int, int, int]]) -> list[int]:
+class Job:
+    def __init__(self, id, deadline, profit) -> None:
+        self.id = id
+        self.deadline = deadline
+        self.profit = profit
+
+    def __repr__(self) -> str:
+        return f"job({self.id})"
+
+
+def job_sequencing(jobs: list[Job]) -> list[int]:
     """
     Function to solve the Job Sequencing Problem with deadlines using a greedy algorithm.
 
@@ -7,7 +17,7 @@ def job_sequencing(jobs: list[tuple[int, int, int]]) -> list[int]:
     and a job can only be scheduled before or on its deadline.
 
     Args:
-    jobs (list[tuple[int, int, int]]): A list of jobs, where each job is represented as a tuple (job_id, deadline, profit).
+    jobs (list[Job]): A list of jobs, where each job is represented as a tuple (job_id, deadline, profit).
         - job_id (int): Unique identifier of the job.
         - deadline (int): The latest time unit by which the job can be completed.
         - profit (int): The profit earned from completing the job.
@@ -26,4 +36,25 @@ def job_sequencing(jobs: list[tuple[int, int, int]]) -> list[int]:
     >>> job_sequencing_with_deadlines(jobs)
     [1, 3, 5]  # Job sequence yielding maximum profit
     """
-    ...
+
+    jobs.sort(key=lambda item: item.profit, reverse=True)
+    result = [None] * len(jobs)
+
+    for job in jobs:
+        for pos in range(job.deadline - 1, -1, -1):
+            if result[pos] is None:
+                result[pos] = job
+                break
+
+    return [job for job in result if job is not None]
+
+
+jobs = [
+    Job(id=1, deadline=2, profit=100),
+    Job(id=2, deadline=1, profit=19),
+    Job(id=3, deadline=2, profit=27),
+    Job(id=4, deadline=1, profit=25),
+    Job(id=5, deadline=3, profit=15),
+]
+
+print(job_sequencing(jobs))

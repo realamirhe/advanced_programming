@@ -1,4 +1,14 @@
-def fractional_knapsack(items: list[tuple[int, int]], capacity: int) -> float:
+class Item:
+    def __init__(self, weight, value) -> None:
+        self.weight = weight
+        self.value = value
+        self.scale = self.value / self.weight
+
+    def __repr__(self) -> str:
+        return f"(w={self.weight},v={self.value})"
+
+
+def fractional_knapsack(items: list[Item], capacity: int) -> float:
     """
     Function to solve the Fractional Knapsack Problem using a greedy algorithm.
 
@@ -7,7 +17,7 @@ def fractional_knapsack(items: list[tuple[int, int]], capacity: int) -> float:
     fractions of an item.
 
     Args:
-    items (list[tuple[int, int]]): A list of items, where each item is represented as a tuple (value, weight).
+    items (list[Item]): A list of items, where each item is represented as a tuple (value, weight).
         - value (int): The value of the item.
         - weight (int): The weight of the item.
     capacity (int): The maximum capacity (weight) the knapsack can hold.
@@ -30,4 +40,29 @@ def fractional_knapsack(items: list[tuple[int, int]], capacity: int) -> float:
     HINT: https://www.geeksforgeeks.org/fractional-knapsack-problem/
     Companies: Microsoft
     """
-    ...
+    items.sort(key=lambda item: item.scale, reverse=True)
+    result = 0
+
+    for item in items:
+        if capacity == 0:
+            break
+        take_over = min(capacity, item.weight)
+        result += take_over * item.scale
+        capacity -= take_over
+
+    return result
+
+
+items = [
+    Item(weight=10, value=60),
+    Item(weight=20, value=100),
+    Item(weight=30, value=120),
+]
+
+
+print(
+    fractional_knapsack(
+        items=items,
+        capacity=50,
+    )
+)

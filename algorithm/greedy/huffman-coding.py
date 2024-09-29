@@ -1,3 +1,38 @@
+import heapq
+from collections import Counter
+
+
+class Node:
+    def __init__(self, character, freq) -> None:
+        self.character = character
+        self.freq = freq
+        self.code = ""
+        self.right = None
+        self.left = None
+
+    def __lt__(self, next):
+        return self.freq < next.freq
+
+    def __repr__(self) -> str:
+        return f"({self.character}, {self.freq}, {self.code})"
+
+
+def get_node_codes(node, occurrences=None):
+    if occurrences is None:
+        occurrences = {}
+    if not node.left and not node.right:
+        occurrences[node.character] = node.code
+        return
+
+    node.right.code = node.code + "1"
+    get_node_codes(node.right, occurrences)
+
+    node.left.code = node.code + "0"
+    get_node_codes(node.left, occurrences)
+
+    return occurrences
+
+
 def huffman_encoding(data: str) -> tuple[dict, str]:
     """
     Function to perform Huffman encoding on a given input string.
@@ -27,4 +62,25 @@ def huffman_encoding(data: str) -> tuple[dict, str]:
     HINT: https://www.geeksforgeeks.org/huffman-coding-greedy-algo-3/
     Companies: Amazon, Microsoft, Samsung
     """
-    ...
+    counter = Counter(data)
+    heap = []
+    for char, freq in counter.items():
+        heapq.heappush(heap, Node(char, freq))
+
+    while len(heap) != 1:
+        min_1 = heapq.heappop(heap)
+        min_2 = heapq.heappop(heap)
+        new_node = Node(
+            f"internal_node({min_1.character}, {min_2.character})",
+            min_1.freq + min_2.freq,
+        )
+        new_node.right = min_1
+        new_node.left = min_2
+        heapq.heappush(heap, new_node)
+
+    return heap.pop()
+
+
+root = huffman_encoding("manya")
+codes = get_node_codes(root)
+print(codes)
