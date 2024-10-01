@@ -13,7 +13,8 @@
    - If it is, compute the maximum value by either including or excluding the item.
    - Otherwise, exclude the item.
 3. The last cell of the table will contain the maximum value for the given capacity.
-> NOTE: cache layer `dict`
+> NOTE: cache layer `dict`  
+> base: cap==0 or item_id==0 / pre_computed_value exists
 
 
 ## Matrix Chain Multiplication
@@ -22,4 +23,5 @@
 2. Use a nested loop to fill the table based on increasing chain lengths.
 3. For each pair of matrices, compute the cost of multiplying the current chain and split it at every possible position.
 4. Return the value in `dp[1][n-1]` (where n is the number of matrices) as the minimum cost.
-> NOTE: cache layer `dict` & `sys.maxsize`
+> NOTE: cache layer `dict` & `sys.maxsize`  
+> base: only one matrix

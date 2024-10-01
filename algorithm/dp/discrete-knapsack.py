@@ -1,4 +1,18 @@
-def knapsack_01(items: list[tuple[int, int]], capacity: int) -> int:
+import random
+
+
+class Item:
+    def __init__(self, weight, value) -> None:
+        self.weight = weight
+        self.value = value
+
+    def __repr__(self) -> str:
+        return f"(w={self.weight},v={self.value})"
+
+
+def knapsack_01(
+    items: list[Item], capacity: int, memo: dict[tuple[int, int], int]
+) -> int:
     """
     Function to solve the 0-1 Knapsack Problem using dynamic programming.
 
@@ -27,4 +41,39 @@ def knapsack_01(items: list[tuple[int, int]], capacity: int) -> int:
     >>> knapsack_01(items, capacity)
     7  # Maximum value that can be obtained is 7
     """
-    ...
+
+    if capacity <= 0:
+        return 0
+
+    if len(items) == 0:
+        return 0
+
+    memoized = memo.get((len(items), capacity), None)
+    if memoized is not None:
+        return memoized
+
+    item = items.pop(-1)  # last processable item
+    drop_last_item = len(items)  # items without last item
+
+    memo[(drop_last_item, capacity)] = knapsack_01(items, capacity, memo)
+    memo[(drop_last_item, capacity - item.weight)] = (
+        knapsack_01(
+            items,
+            capacity - item.weight,
+            memo,
+        )
+        + item.value
+    )
+
+    return max(
+        memo[(drop_last_item, capacity)],
+        memo[(drop_last_item, capacity - items[-1].weight)],
+    )
+
+
+items = [
+    Item(weight=random.randint(0, 10), value=random.randint(20, 30)) for _ in range(50)
+]
+
+
+print(knapsack_01(items=items, capacity=50, memo={}))

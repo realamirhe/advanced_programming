@@ -1,4 +1,12 @@
-def matrix_chain_multiplication(dims: list[int]) -> int:
+import sys
+
+
+def matrix_chain_multiplication(
+    dims: list[int],
+    i,
+    j,
+    memo: dict[tuple[int, int], int],
+) -> int:
     """
     Function to solve the Matrix Chain Multiplication problem using dynamic programming.
 
@@ -18,9 +26,42 @@ def matrix_chain_multiplication(dims: list[int]) -> int:
     Space Complexity:
     - O(n^2) for the 2D table to store the results of subproblems.
 
+    Preview: https://www.mimuw.edu.pl/~erykk/algovis/mcm.html
     Example:
-    >>> dims = [1, 2, 3, 4]
+    # 5x5 5x4 4x8 => 5x8
+    >>> dims = [5, 5, 4, 8]
     >>> matrix_chain_multiplication(dims)
-    18  # Minimum number of scalar multiplications needed
+    260  # Minimum number of scalar multiplications needed
     """
-    ...
+
+    if i + 1 == j:
+        return 0
+
+    if (memoized := memo.get((i, j), None)) is not None:
+        return memoized
+
+    result = sys.maxsize
+    beg = dims[i]
+    end = dims[j]
+
+    for k in range(i + 1, j):
+        result = min(
+            result,
+            matrix_chain_multiplication(dims, i, k, memo)
+            + matrix_chain_multiplication(dims, k, j, memo)
+            + beg * dims[k] * end,
+        )
+
+    memo[(i, j)] = result
+    return result
+
+
+dims = [5, 5, 4, 8]
+print(
+    matrix_chain_multiplication(
+        dims,
+        i=0,
+        j=len(dims) - 1,
+        memo={},
+    )
+)

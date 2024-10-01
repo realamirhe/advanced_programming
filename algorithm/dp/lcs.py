@@ -1,4 +1,10 @@
-def longest_common_subsequence(X: str, Y: str) -> int:
+def longest_common_subsequence(
+    X: str,
+    Y: str,
+    i: int,
+    j: int,
+    memo: list[list[int]],
+) -> int:
     """
     Function to compute the length of the Longest Common Subsequence (LCS) between two strings.
 
@@ -25,4 +31,38 @@ def longest_common_subsequence(X: str, Y: str) -> int:
     4  # LCS length is 4 ("BCAB" is the LCS)
     Companies: Amazon, Microsoft, Citrix
     """
-    ...
+
+    if i < 0 or j < 0:
+        return 0
+
+    if memo[i][j] != -1:
+        return memo[i][j]
+
+    if X[i] == Y[j]:
+        memo[i][j] = 1 + longest_common_subsequence(X, Y, i - 1, j - 1, memo)
+        return memo[i][j]
+
+    memo[i - 1][j] = longest_common_subsequence(X, Y, i - 1, j, memo)
+    memo[i][j - 1] = longest_common_subsequence(X, Y, i, j - 1, memo)
+
+    return max(
+        memo[i - 1][j],
+        memo[i][j - 1],
+    )
+
+
+X = "ABCBDAB"
+Y = "BDCAB"
+memo = [[-1 for j in Y] for i in X]
+
+print(
+    longest_common_subsequence(
+        X,
+        Y,
+        len(X) - 1,
+        len(Y) - 1,
+        memo,
+    )
+)
+
+print(memo)
