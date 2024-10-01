@@ -41,6 +41,7 @@ def knapsack_01(
     >>> knapsack_01(items, capacity)
     7  # Maximum value that can be obtained is 7
     """
+    knapsack_01.call_count += 1
 
     if capacity <= 0:
         return 0
@@ -67,7 +68,7 @@ def knapsack_01(
 
     return max(
         memo[(drop_last_item, capacity)],
-        memo[(drop_last_item, capacity - items[-1].weight)],
+        memo[(drop_last_item, capacity - item.weight)],
     )
 
 
@@ -75,5 +76,6 @@ items = [
     Item(weight=random.randint(0, 10), value=random.randint(20, 30)) for _ in range(50)
 ]
 
-
+knapsack_01.call_count = 0
 print(knapsack_01(items=items, capacity=50, memo={}))
+print(f"called:={knapsack_01.call_count}")

@@ -34,9 +34,12 @@ def matrix_chain_multiplication(
     260  # Minimum number of scalar multiplications needed
     """
 
+    matrix_chain_multiplication.call_count += 1
+
     if i + 1 == j:
         return 0
 
+    # COMMENT TO COMPARE
     if (memoized := memo.get((i, j), None)) is not None:
         return memoized
 
@@ -56,7 +59,8 @@ def matrix_chain_multiplication(
     return result
 
 
-dims = [5, 5, 4, 8]
+dims = [5, 5, 4, 8, 2, 5, 6]
+matrix_chain_multiplication.call_count = 0
 print(
     matrix_chain_multiplication(
         dims,
@@ -65,3 +69,5 @@ print(
         memo={},
     )
 )
+
+print(f"called:={matrix_chain_multiplication.call_count}")

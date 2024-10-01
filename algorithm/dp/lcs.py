@@ -1,3 +1,10 @@
+def pretty_print(mat):
+    for row in mat:
+        for col in row:
+            print("{: >3}".format(col), end=" ")
+        print()
+
+
 def longest_common_subsequence(
     X: str,
     Y: str,
@@ -31,10 +38,11 @@ def longest_common_subsequence(
     4  # LCS length is 4 ("BCAB" is the LCS)
     Companies: Amazon, Microsoft, Citrix
     """
-
+    longest_common_subsequence.call_count += 1
     if i < 0 or j < 0:
         return 0
 
+    # COMMENT TO COMPARE
     if memo[i][j] != -1:
         return memo[i][j]
 
@@ -54,15 +62,16 @@ def longest_common_subsequence(
 X = "ABCBDAB"
 Y = "BDCAB"
 memo = [[-1 for j in Y] for i in X]
-
+longest_common_subsequence.call_count = 0
 print(
-    longest_common_subsequence(
+    f"LCS:={longest_common_subsequence(
         X,
         Y,
         len(X) - 1,
         len(Y) - 1,
         memo,
-    )
+    )}"
 )
 
-print(memo)
+pretty_print(memo)
+print(f"called:={longest_common_subsequence.call_count}")
