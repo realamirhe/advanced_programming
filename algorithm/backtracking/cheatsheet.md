@@ -6,6 +6,14 @@
 4. If the knight successfully visits all squares, return the board. If a move leads to a dead-end, backtrack and try another.
 5. Continue the process until a solution is found or all possibilities are exhausted.
 
+## N Queens
+
+1. Create an empty board and attempt to place queens row by row.
+2. For each row, iterate over each column to check if placing a queen there is valid (i.e., no conflicts with other queens).
+3. Use recursive backtracking to place queens in subsequent rows.
+4. If a placement leads to a conflict in the next row, backtrack and try another position.
+5. Once all queens are placed, store the solution. Repeat until all possible configurations are explored.
+
 ## Subset Sum
 
 1. Start with an empty subset and recursively include/exclude each number from the set.
@@ -14,13 +22,6 @@
 4. Backtrack by excluding the current number and explore other possibilities.
 5. Continue until all subsets have been explored.
 
-## N Queens
-
-1. Create an empty board and attempt to place queens row by row.
-2. For each row, iterate over each column to check if placing a queen there is valid (i.e., no conflicts with other queens).
-3. Use recursive backtracking to place queens in subsequent rows.
-4. If a placement leads to a conflict in the next row, backtrack and try another position.
-5. Once all queens are placed, store the solution. Repeat until all possible configurations are explored.
 
 ## Solve Sudoku
 
