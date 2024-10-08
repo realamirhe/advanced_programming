@@ -26,4 +26,23 @@ def binary_search(arr: list[int], target: int) -> int:
     >>> binary_search(arr, target)
     3  # Index of target in the list
     """
-    ...
+
+    binary_search.counter += 1
+    if len(arr) < 1:
+        return -1
+
+    mid = len(arr) // 2
+
+    if target == arr[mid]:
+        return mid
+    elif len(arr) == 1:
+        return -1
+    elif target > arr[mid]:
+        return binary_search(arr[mid + 1 :], target)
+    else:
+        return binary_search(arr[:mid], target)
+
+
+binary_search.counter = 0
+print(binary_search(list(range(10**6)), 10**6 + 1))
+print("called", binary_search.counter)

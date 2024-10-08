@@ -1,3 +1,27 @@
+def combine(A: list[int], B: list[int]):
+    i = 0
+    j = 0
+    combined_array = []
+    while i < len(A) and j < len(B):
+        if A[i] < B[j]:
+            combined_array.append(A[i])
+            i += 1
+        else:
+            combined_array.append(B[j])
+            j += 1
+
+    while i < len(A):
+        combined_array.append(A[i])
+        i += 1
+
+    while j < len(B):
+        combined_array.append(B[j])
+        j += 1
+
+    print(f"COM({combined_array})")
+    return combined_array
+
+
 def merge_sort(arr: list[int]) -> list[int]:
     """
     Function to perform Merge Sort on a given list of integers.
@@ -22,4 +46,15 @@ def merge_sort(arr: list[int]) -> list[int]:
     >>> merge_sort(arr)
     [3, 9, 10, 27, 38, 43, 82]  # Sorted list
     """
-    ...
+    print(f"MS({arr})")
+    if len(arr) <= 1:
+        return arr
+
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    return combine(left, right)
+
+
+arr = [1, 7, 2, 3, 9, 0, -1, 4]
+print(merge_sort(arr))
