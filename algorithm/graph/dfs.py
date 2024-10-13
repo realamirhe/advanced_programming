@@ -1,4 +1,14 @@
-def dfs(graph: dict[int, list[int]], start: int) -> list[int]:
+def dfs_util(graph, visited, parent):
+    if visited[parent]:
+        print(f"N({parent}) 🤕")
+        return
+    visited[parent] = True
+    print(f"N({parent}) ✅")
+    for child in graph[parent]:
+        dfs_util(graph, visited, child)
+
+
+def dfs(graph: dict[int, list[int]]) -> list[int]:
     """
     Function to perform Depth-First Search (DFS) on a graph starting from a given node.
 
@@ -25,4 +35,10 @@ def dfs(graph: dict[int, list[int]], start: int) -> list[int]:
     >>> dfs(graph, 0)
     [0, 2, 3, 1]  # DFS traversal order
     """
-    ...
+    visited = {key: False for key in graph.keys()}
+    for child in graph.keys():
+        dfs_util(graph, visited, child)
+
+
+graph = {0: [1, 2], 1: [2], 2: [3], 3: [1, 2], 7: [8, 9], 9: [8], 8: []}
+dfs(graph)
